@@ -1,0 +1,203 @@
+<?xml version="1.0" ?>
+<mujoco model="continuum_robot_v2">
+  <compiler angle="degree"/>
+  <option timestep="0.001" gravity="0 0 -9.81" integrator="implicitfast"/>
+  <visual>
+    <quality shadowsize="4096"/>
+    <headlight diffuse="0.5 0.5 0.5" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+  </visual>
+  <default>
+    <geom type="capsule" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+    <default class="bend_joint">
+      <joint type="hinge" stiffness="0.005" damping="0.0005" frictionloss="0.0002" armature="1e-06" limited="true" range="-45 45"/>
+    </default>
+    <default class="twist_joint">
+      <joint type="hinge" stiffness="0.05" damping="0.001" frictionloss="0.0005" armature="1e-06" limited="true" range="-180 180"/>
+    </default>
+  </default>
+  <asset>
+    <mesh name="notch_mesh" file="meshes/notch.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="distal_mesh" file="meshes/distal.stl" scale="0.001 0.001 0.001"/>
+    <texture name="checker" type="2d" builtin="checker" width="512" height="512" rgb1="0.20 0.23 0.27" rgb2="0.14 0.17 0.20"/>
+    <material name="floor_mat" texture="checker" texrepeat="8 8" reflectance="0.25" shininess="0.1"/>
+    <material name="niti_mat" rgba="0.690 0.878 0.902 1.0" shininess="0.85" specular="0.6" reflectance="0.1"/>
+    <material name="tip_mat" rgba="1.0 0.50 0.10 1.0" shininess="0.90" specular="0.7"/>
+    <material name="base_mat" rgba="0.60 0.62 0.65 1.0" shininess="0.6" specular="0.5"/>
+  </asset>
+  <worldbody>
+    <geom name="floor" type="plane" size="0.8 0.8 0.1" pos="0 0 -0.005" material="floor_mat" contype="1" conaffinity="1"/>
+    <light name="ambient" directional="false" pos="0 0 0.5" diffuse="0.25 0.25 0.25" specular="0 0 0" castshadow="false"/>
+    <light name="sun" directional="true" pos="0.3 -0.5 1.0" dir="-0.3 0.5 -1.0" castshadow="true" diffuse="0.85 0.85 0.85" specular="0.30 0.30 0.30"/>
+    <light name="fill_left" directional="true" pos="-0.6 0.3 0.5" dir="0.6 -0.3 -0.5" castshadow="false" diffuse="0.28 0.32 0.40" specular="0 0 0"/>
+    <light name="fill_bottom" directional="true" pos="0 0 -0.3" dir="0 0 1" castshadow="false" diffuse="0.10 0.11 0.14" specular="0 0 0"/>
+    <body name="robot_base" pos="0 0 0">
+      <geom name="base_geom" type="cylinder" size="0.001750 0.002" mass="0.003" material="base_mat" contype="0" conaffinity="0" rgba="0.6 0.62 0.65 1.0"/>
+      <site name="base_tendon_site" pos="0 0.001375 0" size="0.0004" rgba="1 0.2 0.2 1"/>
+      <site name="base_site" pos="0 0 0" size="0.0005" rgba="0.5 0.5 0.5 0.5"/>
+      <body name="segment_1" pos="0 0 0.003125">
+        <joint class="bend_joint" name="bend_x_1" axis="1 0 0"/>
+        <joint class="twist_joint" name="twist_z_1" axis="0 0 1"/>
+        <geom name="col_geom_1" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+        <geom name="vis_geom_1" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+        <site name="tendon_point_1" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+        <body name="segment_2" pos="0 0 0.003125">
+          <joint class="bend_joint" name="bend_x_2" axis="1 0 0"/>
+          <joint class="twist_joint" name="twist_z_2" axis="0 0 1"/>
+          <geom name="col_geom_2" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+          <geom name="vis_geom_2" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+          <site name="tendon_point_2" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+          <body name="segment_3" pos="0 0 0.003125">
+            <joint class="bend_joint" name="bend_x_3" axis="1 0 0"/>
+            <joint class="twist_joint" name="twist_z_3" axis="0 0 1"/>
+            <geom name="col_geom_3" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+            <geom name="vis_geom_3" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+            <site name="tendon_point_3" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+            <body name="segment_4" pos="0 0 0.003125">
+              <joint class="bend_joint" name="bend_x_4" axis="1 0 0"/>
+              <joint class="twist_joint" name="twist_z_4" axis="0 0 1"/>
+              <geom name="col_geom_4" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+              <geom name="vis_geom_4" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+              <site name="tendon_point_4" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+              <body name="segment_5" pos="0 0 0.003125">
+                <joint class="bend_joint" name="bend_x_5" axis="1 0 0"/>
+                <joint class="twist_joint" name="twist_z_5" axis="0 0 1"/>
+                <geom name="col_geom_5" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                <geom name="vis_geom_5" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                <site name="tendon_point_5" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                <body name="segment_6" pos="0 0 0.003125">
+                  <joint class="bend_joint" name="bend_x_6" axis="1 0 0"/>
+                  <joint class="twist_joint" name="twist_z_6" axis="0 0 1"/>
+                  <geom name="col_geom_6" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                  <geom name="vis_geom_6" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                  <site name="tendon_point_6" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                  <body name="segment_7" pos="0 0 0.003125">
+                    <joint class="bend_joint" name="bend_x_7" axis="1 0 0"/>
+                    <joint class="twist_joint" name="twist_z_7" axis="0 0 1"/>
+                    <geom name="col_geom_7" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                    <geom name="vis_geom_7" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                    <site name="tendon_point_7" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                    <body name="segment_8" pos="0 0 0.003125">
+                      <joint class="bend_joint" name="bend_x_8" axis="1 0 0"/>
+                      <joint class="twist_joint" name="twist_z_8" axis="0 0 1"/>
+                      <geom name="col_geom_8" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                      <geom name="vis_geom_8" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                      <site name="tendon_point_8" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                      <body name="segment_9" pos="0 0 0.003125">
+                        <joint class="bend_joint" name="bend_x_9" axis="1 0 0"/>
+                        <joint class="twist_joint" name="twist_z_9" axis="0 0 1"/>
+                        <geom name="col_geom_9" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                        <geom name="vis_geom_9" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                        <site name="tendon_point_9" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                        <body name="segment_10" pos="0 0 0.003125">
+                          <joint class="bend_joint" name="bend_x_10" axis="1 0 0"/>
+                          <joint class="twist_joint" name="twist_z_10" axis="0 0 1"/>
+                          <geom name="col_geom_10" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                          <geom name="vis_geom_10" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                          <site name="tendon_point_10" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                          <body name="segment_11" pos="0 0 0.003125">
+                            <joint class="bend_joint" name="bend_x_11" axis="1 0 0"/>
+                            <joint class="twist_joint" name="twist_z_11" axis="0 0 1"/>
+                            <geom name="col_geom_11" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                            <geom name="vis_geom_11" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                            <site name="tendon_point_11" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                            <body name="segment_12" pos="0 0 0.003125">
+                              <joint class="bend_joint" name="bend_x_12" axis="1 0 0"/>
+                              <joint class="twist_joint" name="twist_z_12" axis="0 0 1"/>
+                              <geom name="col_geom_12" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                              <geom name="vis_geom_12" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                              <site name="tendon_point_12" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                              <body name="segment_13" pos="0 0 0.003125">
+                                <joint class="bend_joint" name="bend_x_13" axis="1 0 0"/>
+                                <joint class="twist_joint" name="twist_z_13" axis="0 0 1"/>
+                                <geom name="col_geom_13" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                                <geom name="vis_geom_13" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                                <site name="tendon_point_13" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                                <body name="segment_14" pos="0 0 0.003125">
+                                  <joint class="bend_joint" name="bend_x_14" axis="1 0 0"/>
+                                  <joint class="twist_joint" name="twist_z_14" axis="0 0 1"/>
+                                  <geom name="col_geom_14" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                                  <geom name="vis_geom_14" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                                  <site name="tendon_point_14" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                                  <body name="segment_15" pos="0 0 0.003125">
+                                    <joint class="bend_joint" name="bend_x_15" axis="1 0 0"/>
+                                    <joint class="twist_joint" name="twist_z_15" axis="0 0 1"/>
+                                    <geom name="col_geom_15" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                                    <geom name="vis_geom_15" type="mesh" mesh="notch_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="niti_mat"/>
+                                    <site name="tendon_point_15" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                                    <body name="segment_16" pos="0 0 0.003125">
+                                      <joint class="bend_joint" name="bend_x_16" axis="1 0 0"/>
+                                      <joint class="twist_joint" name="twist_z_16" axis="0 0 1"/>
+                                      <geom name="col_geom_16" type="capsule" pos="0 0 0.001563" size="0.001750 0.001406" mass="7.836187e-05" contype="0" conaffinity="0" rgba="0 0 0 0"/>
+                                      <geom name="vis_geom_16" type="mesh" mesh="distal_mesh" euler="-90 0 90" pos="0.00175 -0.00175 0.050" contype="0" conaffinity="0" group="1" material="tip_mat"/>
+                                      <site name="tendon_point_16" pos="0 0.001375 0" size="0.00025" rgba="1 0.2 0.2 1"/>
+                                      <site name="tip_site" pos="0 0 0.001563" size="0.001" rgba="1 1 0 1"/>
+                                      <camera name="endoscope" pos="0 0 0.003125" xyaxes="1 0 0 0 0 1" fovy="90"/>
+                                    </body>
+                                  </body>
+                                </body>
+                              </body>
+                            </body>
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <tendon>
+    <spatial name="ppt_tendon" width="0.00022" rgba="1 0.2 0.2 0.9">
+      <site site="base_tendon_site"/>
+      <site site="tendon_point_1"/>
+      <site site="tendon_point_2"/>
+      <site site="tendon_point_3"/>
+      <site site="tendon_point_4"/>
+      <site site="tendon_point_5"/>
+      <site site="tendon_point_6"/>
+      <site site="tendon_point_7"/>
+      <site site="tendon_point_8"/>
+      <site site="tendon_point_9"/>
+      <site site="tendon_point_10"/>
+      <site site="tendon_point_11"/>
+      <site site="tendon_point_12"/>
+      <site site="tendon_point_13"/>
+      <site site="tendon_point_14"/>
+      <site site="tendon_point_15"/>
+      <site site="tendon_point_16"/>
+    </spatial>
+  </tendon>
+  <actuator>
+    <motor name="push_pull_motor" tendon="ppt_tendon" ctrlrange="-5 5" gear="1"/>
+    <motor name="twist_motor_1" joint="twist_z_1" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_2" joint="twist_z_2" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_3" joint="twist_z_3" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_4" joint="twist_z_4" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_5" joint="twist_z_5" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_6" joint="twist_z_6" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_7" joint="twist_z_7" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_8" joint="twist_z_8" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_9" joint="twist_z_9" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_10" joint="twist_z_10" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_11" joint="twist_z_11" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_12" joint="twist_z_12" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_13" joint="twist_z_13" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_14" joint="twist_z_14" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_15" joint="twist_z_15" ctrlrange="-0.5 0.5" gear="1"/>
+    <motor name="twist_motor_16" joint="twist_z_16" ctrlrange="-0.5 0.5" gear="1"/>
+  </actuator>
+  <sensor>
+    <tendonpos name="tendon_length" tendon="ppt_tendon"/>
+    <tendonvel name="tendon_vel" tendon="ppt_tendon"/>
+    <actuatorfrc name="push_pull_frc" actuator="push_pull_motor"/>
+    <actuatorfrc name="twist_frc" actuator="twist_motor_1"/>
+    <framepos name="tip_pos_sensor" objtype="site" objname="tip_site"/>
+    <framequat name="tip_quat_sensor" objtype="site" objname="tip_site"/>
+    <framelinvel name="tip_linvel_sensor" objtype="site" objname="tip_site"/>
+    <frameangvel name="tip_angvel_sensor" objtype="site" objname="tip_site"/>
+  </sensor>
+</mujoco>

@@ -1,0 +1,49 @@
+# ============================================================
+# configs/robot_params.yaml
+# Tham số vật lý tập trung cho dự án Continuum Robot
+# Chỉnh sửa file này để thay đổi tính chất cơ học mà không
+# cần sửa code Python.
+# ============================================================
+
+# ── Tích phân số ────────────────────────────────────────────
+# implicitfast: Ổn định vô điều kiện, phù hợp cho hệ cứng (stiff)
+# euler: Nhanh hơn nhưng cần dt nhỏ hơn
+# rk4: Chính xác bậc 4, không giúp cho hệ cứng
+timestep: 0.001
+integrator: implicitfast   # Khuyến nghị cho robot mềm với khớp lò xo
+
+# ── Độ cứng khớp (N·m/rad) ──────────────────────────────────
+# Dựa trên đặc tính ống NiTi (E≈60GPa, G≈25GPa) có rãnh cắt
+# Giảm hiệu dụng 100-200x so với ống nguyên do rãnh cắt
+bend_stiffness:  0.005     # Độ cứng uốn / notch
+twist_stiffness: 0.050     # Độ cứng xoắn (cao hơn uốn: GJ >> EI cho ống mỏng)
+
+# ── Hệ số cản (N·m·s/rad) ───────────────────────────────────
+# Cản nội tại của vật liệu (NiTi có trễ cơ học nội tại)
+bend_damping:    0.0005
+twist_damping:   0.0010
+
+# ── Ma sát Coulomb (N·m) — Nguồn gốc của trễ cơ học (Hysteresis) ──
+# Quan trọng cho phân tích trễ! Tăng giá trị này để thấy vòng trễ rộng hơn.
+bend_friction:   0.0002
+twist_friction:  0.0005
+
+# ── Armature (kg·m²) — Quán tính quy đổi về khớp ──────────
+# Thêm quán tính nhỏ để ổn định số học (regularization)
+# Không ảnh hưởng nhiều đến vật lý nếu giá trị << inertia vật lý
+armature: 1.0e-6
+
+# ── Khối lượng vật liệu ─────────────────────────────────────
+# Mật độ NiTi thực: 6450 kg/m³
+# mass_factor: Tỉ lệ khối lượng thực tế / ống nguyên (< 1 do rãnh cắt)
+mass_factor: 0.60          # ~40% vật liệu bị cắt đi
+
+# ── Camera nội soi ──────────────────────────────────────────
+camera_width:   640
+camera_height:  360
+camera_fps:     30         # Frame rate mục tiêu cho cửa sổ OpenCV
+
+# ── Ghi dữ liệu ─────────────────────────────────────────────
+log_interval: 5            # Ghi log mỗi N simulation step
+log_file: simulation_log.csv
+
