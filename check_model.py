@@ -8,7 +8,7 @@ Tự động tái tạo XML trước khi load để đảm bảo model luôn c�
 import sys
 
 # Tái tạo XML (đảm bảo dùng config mới nhất)
-from builder.xml_generator import generate_continuum_robot_xml
+from robots.robot_builder import generate_continuum_robot_xml
 
 ROBOT_ID = 2   # Thay đổi để xem robot khác
 

@@ -7,7 +7,7 @@ import sys
 import numpy as np
 import mujoco
 
-from builder.xml_generator import generate_continuum_robot_xml
+from robots.robot_builder import generate_continuum_robot_xml
 from core.sim_env import SoftRobotEnv
 from sensors.virtual_sensors import VirtualSensorSuite
 from utils.kinematics import (
