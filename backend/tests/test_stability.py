@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
 """
 test_stability.py  -- v1.0.2
 Integration test: XML gen, model load, physics, FK, SoroTwistFK, Jacobian.
@@ -7,10 +11,10 @@ import sys
 import numpy as np
 import mujoco
 
-from robots.robot_builder import generate_continuum_robot_xml
-from core.sim_env import SoftRobotEnv
-from sensors.virtual_sensors import VirtualSensorSuite
-from utils.kinematics import (
+from continuum_robot.robots.robot_builder import generate_continuum_robot_xml
+from continuum_robot.core.sim_env import SoftRobotEnv
+from continuum_robot.sensors.virtual_sensors import VirtualSensorSuite
+from continuum_robot.utils.kinematics import (
     get_tip_frame_from_mujoco,
     compute_tip_bending_angle_deg,
     compute_pcc_fk,

@@ -83,8 +83,8 @@ def _load_params(config_path: str) -> dict:
 
 def generate_continuum_robot_xml(
     robot_id: int = 2,
-    config_path: str = "configs/robot_params.yaml",
-    output_dir: str = "assets",
+    config_path: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "../configs/robot_params.yaml")),
+    output_dir: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "../assets")),
     use_stl: bool = True,
 ) -> tuple[str, int]:
     """

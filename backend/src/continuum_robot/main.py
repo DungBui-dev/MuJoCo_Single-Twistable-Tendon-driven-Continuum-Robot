@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 """
 main.py  -- v1.0.2
 ====================
@@ -45,22 +49,22 @@ except ImportError:
     _CV2 = False
     print("[WARN] opencv-python not installed. Endoscope camera disabled.")
 
-from robots.robot_builder import generate_continuum_robot_xml
-from controllers.keyboard_ctrl import KeyboardController
-from core.sim_env import SoftRobotEnv
-from sensors.virtual_sensors import VirtualSensorSuite
-from utils.kinematics import (
+from continuum_robot.robots.robot_builder import generate_continuum_robot_xml
+from continuum_robot.algorithms.keyboard_ctrl import KeyboardController
+from continuum_robot.core.sim_env import SoftRobotEnv
+from continuum_robot.sensors.virtual_sensors import VirtualSensorSuite
+from continuum_robot.utils.kinematics import (
     get_tip_frame_from_mujoco,
     get_tip_euler_xyz,
     compute_tip_bending_angle_deg,
     get_sorotwist_fk,
 )
-from utils.logger import DataLogger
+from continuum_robot.utils.logger import DataLogger
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Config
 # ─────────────────────────────────────────────────────────────────────────────
-CONFIG_PATH = "configs/robot_params.yaml"
+CONFIG_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "configs/robot_params.yaml" if "main.py" in __file__ else "../../src/continuum_robot/configs/robot_params.yaml"))
 ROBOT_ID    = 2
 
 # max adjustable step
@@ -142,7 +146,7 @@ def main() -> int:
     # SoroTwistFK instance (Task 1)
     fk_solver = get_sorotwist_fk()
 
-    log_file     = params.get("log_file", "simulation_log.csv")
+    log_file     = params.get("log_file", os.path.abspath(os.path.join(os.path.dirname(__file__), "../../logs/simulation_log.csv")))
     log_interval = int(params.get("log_interval", 5))
     logger       = DataLogger(log_file, n_notches=env.n_notches)
 
@@ -310,7 +314,7 @@ def main() -> int:
 
     logger.save()
     print(f"\n  Hysteresis analysis:")
-    print(f"    python utils/hysteresis_plot.py --csv {log_file} --smooth --save")
+    print(f"    python backend/src/continuum_robot/utils/hysteresis_plot.py --csv {log_file} --smooth --save")
     return 0
 
 
